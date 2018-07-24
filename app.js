@@ -61,11 +61,11 @@ var app = new Vue({
     },
     checkWin () {
       if (this.monsterHealth <= 0) {
-        if (confirm('You won! New Game?')) this.startGame()
+        if (window.confirm('You won! New Game?')) this.startGame()
         else this.gameIsRunning = false
         return true
       } else if (this.playerHealth <= 0) {
-        if (confirm('You lost! New Game?')) this.startGame()
+        if (window.confirm('You lost! New Game?')) this.startGame()
         else this.gameIsRunning = false
         return true
       }
