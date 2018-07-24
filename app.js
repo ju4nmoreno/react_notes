@@ -1,50 +1,75 @@
-new Vue({
+var app = new Vue({
   el: '#app',
   data: {
     playerHealth: 100,
     monsterHealth: 100,
-    gameIsRunning: false
+    gameIsRunning: false,
+    turns: []
   },
   methods: {
-    startGame() {
-      this.playerHealth = 100;
-      this.monsterHealth = 100;
-      this.gameIsRunning = true;
+    startGame () {
+      this.playerHealth = 100
+      this.monsterHealth = 100
+      this.gameIsRunning = true
+      this.turns = []
     },
-    attack(){
-      this.monsterHealth -= this.calculateDamage(3,10);
+    attack () {
+      let damage = this.calculateDamage(3, 10)
+      this.monsterHealth -= damage
+      this.turns.unshift({
+        isPlayer: false,
+        text: `Player hits Monster for ${damage}`
+      })
       if (this.checkWin()) return
-      this.monsterAttack();
+      this.monsterAttack()
     },
-    specialAttack(){
-      this.monsterHealth -= this.calculateDamage(10,20);
+    specialAttack () {
+      let damage = this.calculateDamage(10, 20)
+      this.monsterHealth -= damage
+      this.turns.unshift({
+        isPlayer: false,
+        text: `Player hits Moster hard for ${damage}`
+      })
       if (this.checkWin()) return
-      this.monsterAttack();
+      this.monsterAttack()
     },
-    monsterAttack(){
-      this.playerHealth -= this.calculateDamage(5, 12);
+    monsterAttack () {
+      let damage = this.calculateDamage(5, 12)
+      this.playerHealth -= damage
       this.checkWin()
+      this.turns.unshift({
+        isPlayer: true,
+        text: `Monster hits Player for ${damage}`
+      })
     },
-    heal(){
+    heal () {
+      if (this.playerHealth <= 90) {
+        this.playerHealth += 10
+      } else this.playerHealth = 100
 
+      this.turns.unshift({
+        isPlayer: false,
+        text: `Player heals hits Player for 10`
+      })
+      this.monsterAttack()
     },
-    giveUp(){
-
+    giveUp () {
+      this.gameIsRunning = false
     },
-    calculateDamage(min, max){
+    calculateDamage (min, max) {
       return Math.max(Math.floor(Math.random() * max) + 1, min)
     },
-    checkWin(){
-      if (this.monsterHealth <= 0 ) {
-        if (confirm('You won! New Game?')) this.startGame();
-        else this.gameIsRunning = false;
-        return true;
+    checkWin () {
+      if (this.monsterHealth <= 0) {
+        if (confirm('You won! New Game?')) this.startGame()
+        else this.gameIsRunning = false
+        return true
       } else if (this.playerHealth <= 0) {
-        if(confirm('You lost! New Game?')) this.startGame();
-        else this.gameIsRunning = false;
+        if (confirm('You lost! New Game?')) this.startGame()
+        else this.gameIsRunning = false
         return true
       }
-      return false;
+      return false
     }
   }
 })
