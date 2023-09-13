@@ -78,7 +78,8 @@ render() {
     - called only ones in the lifecycle methods
     - Invoked immediately after a component and all its chlidren components have been rendered to the DOM
     - causes side effects === HTTP requests
-<br />
+
+
 ### Updating
 When a component is being re-rendered as a result of changes to either its props or state, UpdatingFace 5 methods
 - static getDerivedStateFromProps
@@ -106,7 +107,6 @@ getSnaphotBeforeUpdate(prevProps, prevStata) {
 ```js
 componentDidUpdate(prevProps, prevState, snapshot) { console.log(ee) }
 ```
-<br />
 
 ### Unmounting
 When a component is being romeved from DOM UnmountingFace: 
